@@ -4,13 +4,13 @@ import time
 import unittest
 class NewVisitorTest(unittest.TestCase):
     def setUp(self):
-        self.broswer=webdriver.Firefox()
+        self.browser=webdriver.Firefox()
     def tearDown(self):
-        self.broswer.quit()
+        self.browser.quit()
     def test_can_start_a_list_and_retrieve_it_later(self):
         #Edith has heard about a cool new online todo app. she goes
         #to check out its homepage
-        self.broswer.get('http://localhost:8000')
+        self.browser.get('http://localhost:8000')
 
 
 
@@ -34,13 +34,14 @@ class NewVisitorTest(unittest.TestCase):
 
         #when she hits enter. the pagr updates,and now the page lists
         #1: buy peacock feathers as an item in a to-do list
-        inputbox.sned_keys(Keys.ENTER)
+        inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
         table=self.browser.find_element_by_id('id_list_table')
         rows=table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text=='1:Buy peacock feathers' for row in rows)
+            any(row.text=='1:Buy peacock feathers' for row in rows),
+            "New to-do item did not appear in table"
             )
 
         #there is still atext box inviting her to add another item. she
